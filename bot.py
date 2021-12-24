@@ -35,7 +35,7 @@ def main():
   updater.start_webhook(listen="0.0.0.0",        
                         port=int(PORT),                       
                         url_path=TOKEN) 
-  updater.bot.setWebhook('https://your-app-name.herokuapp.com/' + TOKEN) 
+  updater.bot.setWebhook('https://activity-evening.herokuapp.com/' + TOKEN) 
   updater.idle()
 
 
