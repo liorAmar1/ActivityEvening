@@ -72,13 +72,13 @@ def main():
   updater = Updater(TOKEN, use_context=True)    
   dp = updater.dispatcher  
   
-  dp.add_handler(CommandHandler('start', start))
-  dp.add_handler(CommandHandler('add', add, pass_args=True))
-  dp.add_handler(CommandHandler('rm', rm, pass_args=True))   
-  dp.add_handler(CommandHandler('busy', busy, pass_args=True))   
-  dp.add_handler(CommandHandler('free', free, pass_args=True))   
-  dp.add_handler(CommandHandler('goto', goto, pass_args=True))
-  dp.add_handler(CommandHandler('st', state, pass_args=True))      
+  dp.add_handler(CommandHandler("start", start))
+  #dp.add_handler(CommandHandler("add", add, pass_args=True))
+  #dp.add_handler(CommandHandler("rm", rm, pass_args=True))   
+  #dp.add_handler(CommandHandler("busy", busy, pass_args=True))   
+  #dp.add_handler(CommandHandler("free", free, pass_args=True))   
+  #dp.add_handler(CommandHandler("goto", goto, pass_args=True))
+  dp.add_handler(CommandHandler("st", state))      
      
   updater.start_webhook(listen="0.0.0.0",        
                         port=int(PORT),                       
