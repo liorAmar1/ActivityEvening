@@ -1,14 +1,3 @@
-
-# MESSGAGE_FORMATS
-ADD_STATION = u'add s (?P<param1>.*)'
-RM_STATION = u'rm s (?P<param1>.*)'
-ADD_GROUP = u'add g (?P<param1>.*)'
-RM_GROUP = u'rm g (?P<param1>.*)'
-BUSY_STATION = u'(?P<param1>.*) in (?P<param2>.*)'
-FREE_STATION = u'(?P<param1>.*) free'
-GROUP_GO_TO = u'(?P<param1>.*) go (?P<param2>.*)'
-
-
 CURRENT_STATE = u"Free:\n{free}\nBusy:\n{busy}\n"
 STATION_STATE = u"{name}: group:{group} waits:{waits}"
 
