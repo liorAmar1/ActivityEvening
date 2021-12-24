@@ -31,7 +31,8 @@ To announce a free station:\n\
 def start(update, context):    
   chat_id = update.message.chat.id
   context.bot.send_message(chat_id=chat_id, text=START_MESSAGE)
-  update.message.reply_text(START_MESSAGE)
+  context.bot.send_message(chat_id=chat_id, text="bla")
+  update.message.reply_text("bla")
 
 
 def add(update, context):
