@@ -29,7 +29,10 @@ To announce a free station:\n\
 
 # Commands Wrappers
 def start(update, context):    
+  chat_id = update.message.chat.id
+  context.bot.send_message(chat_id=chat_id, text=START_MESSAGE)
   update.message.reply_text(START_MESSAGE)
+
 
 def add(update, context):
 	add_type = context.args[0]
