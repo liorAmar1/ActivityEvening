@@ -127,10 +127,10 @@ def busy(update, context):
 def free(update, context):
 	free_station(context.args[0])
 
-def goto(update, context)
+def goto(update, context):
 	go_to_station(context.args[0], context.args[1])
 
-def state(update, context)
+def state(update, context):
 	chat_id = update.message.reply_text(CURRENT_STATE.format(free="\n".join(
 		[station.__repr__() for station in filter(lambda s: stations[s].is_free(), stations)]),
         busy="\n".join(
