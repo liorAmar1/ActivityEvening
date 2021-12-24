@@ -2,35 +2,80 @@ from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 import requests
 import re
 import os
+
+from operations import *
+
 PORT = int(os.environ.get('PORT', 5000))
 TOKEN = os.environ["TOKEN"]
-API_ENDPOINT = 'https://dog.ceo/api/breeds/image/random'
 
-# Utils
-def get_url():
-    contents = requests.get(API_ENDPOINT).json()
-    url = contents['message']
-    return url
-def get_image_url():
-    allowed_extension = ['jpg', 'jpeg', 'png']
-    file_extension = ''
-    while file_extension not in allowed_extension:
-        url = get_url()
-        file_extension = re.search("([^.]*)$", url).group(1).lower()
-    return url
+START_MESSAGE = u"Welcome to Stations Manager bot.\n \
+It will show which station is free and which is busy.\n \
+In order to do so it will need your help in updating him on your station state changes :)\n \
+The syntax is:\n \
+/add s <station-name>\n \
+/rm s <station-name>\n \
+\n \
+/add g <group-number>\n \
+/rm g <group-number\n \
+\n \
+To announce a busy station:\n \
+/busy <station-name> <group-number> \n \
+\n \
+To announce where you sent the group:\n \
+/goto <group-number> <station-name> \n \
+\n \
+To announce a free station:\n\
+/free <station-name>"
 
-# Commands
-def bop(update, context):    
-  url = get_image_url()    
-  chat_id = update.message.chat.id       
-  context.bot.send_photo(chat_id=chat_id, photo=url)
+# Commands Wrappers
+def start(update, context):    
+  update.message.reply_text(START_MESSAGE)
+
+def add(update, context):
+	add_type = context.args[0]
+	if add_type == 's':
+		add_station(context.args[1])
+	elif add_type == 'g':
+		add_group(context.args[1])
+	else:
+		assert "You have a typo, impossible addition type"
+
+def rm(update, context):
+	rm_type = context.args[0]
+	if rm_type == 's':
+		rm_station(context.args[1])
+	elif rm_type == 'g':
+		rm_group(context.args[1])
+	else:
+		assert "You have a typo, impossible addition type"
+
+def busy(update, context):
+	busy_station(context.args[0], context.args[1])
+
+def free(update, context):
+	free_station(context.args[0])
+
+def goto(update, context)
+	go_to_station(context.args[0], context.args[1])
+
+def state(update, context)
+	chat_id = update.message.reply_text(CURRENT_STATE.format(free="\n".join(
+		[station.__repr__() for station in filter(lambda s: stations[s].is_free(), stations)]),
+        busy="\n".join(
+        	[stations[station].__repr__() for station in filter(lambda s: not stations[s].is_free(), stations)])))
 
 # Menu?
 def main():    
   updater = Updater(TOKEN, use_context=True)    
   dp = updater.dispatcher  
   
-  dp.add_handler(CommandHandler('bop', bop))   
+  dp.add_handler(CommandHandler('start', start, pass_args=True))
+  dp.add_handler(CommandHandler('add', add, pass_args=True))
+  dp.add_handler(CommandHandler('rm', rm, pass_args=True))   
+  dp.add_handler(CommandHandler('busy', busy, pass_args=True))   
+  dp.add_handler(CommandHandler('free', free, pass_args=True))   
+  dp.add_handler(CommandHandler('goto', goto, pass_args=True))
+  dp.add_handler(CommandHandler('st', state, pass_args=True))      
      
   updater.start_webhook(listen="0.0.0.0",        
                         port=int(PORT),                       
