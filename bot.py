@@ -72,7 +72,7 @@ def main():
   updater = Updater(TOKEN, use_context=True)    
   dp = updater.dispatcher  
   
-  dp.add_handler(CommandHandler('start', start, pass_args=True))
+  dp.add_handler(CommandHandler('start', start))
   dp.add_handler(CommandHandler('add', add, pass_args=True))
   dp.add_handler(CommandHandler('rm', rm, pass_args=True))   
   dp.add_handler(CommandHandler('busy', busy, pass_args=True))   
