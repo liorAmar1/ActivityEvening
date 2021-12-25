@@ -12,6 +12,10 @@ START_MESSAGE = u"Welcome to Stations Manager bot.\n \
 It will show which station is free and which is busy.\n \
 In order to do so it will need your help in updating him on your station state changes :)\n \
 The syntax is:\n \
+To print the menu: \
+/start \
+To print the current stations state \
+/st \
 /add s <station-name>\n \
 /rm s <station-name>\n \
 \n \
@@ -25,7 +29,10 @@ To announce where you sent the group:\n \
 /goto <group-number> <station-name> \n \
 \n \
 To announce a free station:\n\
-/free <station-name>"
+/free <station-name>\n \
+To add time to a group total mission's time:\n \
+/time <group-number> <time>\n"
+
 
 # Commands Wrappers
 def start(update, context):
@@ -47,7 +54,7 @@ def add(update, context):
 			add_group(context.args[1])
 		else:
 			update.message.reply_text("asserting")
-			assert "You have a typo, impossible addition type"
+			assert False, "You have a typo, impossible addition type"
 	except AssertionError as e:
 		update.message.reply_text(e.__repr__())
 	except Exception as e:
