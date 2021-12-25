@@ -11,7 +11,7 @@ TOKEN = os.environ["TOKEN"]
 START_MESSAGE = u"Welcome to Stations Manager bot.\n \
 It will show which station is free and which is busy.\n \
 In order to do so it will need your help in updating him on your station state changes :)\n \
-*bold* The syntax is:\n \
+**bold** The syntax is:\n \
 To print the menu: \n\
 /start \n\
 To print the current stations state \n\
@@ -39,9 +39,9 @@ def start(update, context):
 	try:
 		update.message.reply_text(START_MESSAGE)
 	except AssertionError as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 	except Exception as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 
 
 def add(update, context):
@@ -56,7 +56,7 @@ def add(update, context):
 	except AssertionError as e:
 		update.message.reply_text(str(e))
 	except Exception as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 
 
 
@@ -70,57 +70,57 @@ def rm(update, context):
 		else:
 			assert "You have a typo, impossible addition type"
 	except AssertionError as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 	except Exception as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 
 
 def busy(update, context):
 	try:
 		busy_station(context.args[0], context.args[1])
 	except AssertionError as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 	except Exception as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 
 
 def free(update, context):
 	try:
 		free_station(context.args[0])
 	except AssertionError as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 	except Exception as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 
 
 def goto(update, context):
 	try:
 		go_to_station(context.args[0], context.args[1])
 	except AssertionError as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 	except Exception as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 
 
 def state(update, context):
 	try:
 		update.message.reply_text(CURRENT_STATE.format(free="\n".join(
-			[station.__repr__() for station in filter(lambda s: stations[s].is_free(), stations)]),
+			[str(station) for station in filter(lambda s: stations[s].is_free(), stations)]),
 			busy="\n".join(
-				[stations[station].__repr__() for station in filter(lambda s: not stations[s].is_free(), stations)])))
+				[str(stations[station]) for station in filter(lambda s: not stations[s].is_free(), stations)])))
 	except AssertionError as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 	except Exception as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 
 
 def time(update, context):
 	try:
 		add_time(context.args[0], context.args[1])
 	except AssertionError as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 	except Exception as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 
 
 def main():    
