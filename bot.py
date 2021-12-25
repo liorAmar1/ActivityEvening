@@ -28,18 +28,19 @@ To announce a free station:\n\
 /free <station-name>"
 
 @contextmanager
-def respond_error(update):
+def respond_error(update, context):
+	chat_id = update.message.chat.id
 	try:
 		yield
 	except AssertionError as e:
-		assert 0==1, "error"
-		update.message.reply_text(e.__repr__())
-	finally:
-		pass
+		context.bot.send_message(chat_id=chat_id, text=e.__repr__())
+	except Exception as e:
+		context.bot.send_message(chat_id=chat_id, text=e.__repr__())
 
 # Commands Wrappers
 def start(update, context):
 	update.message.reply_text(START_MESSAGE)
+
 
 def add(update, context):
 	with respond_error(update):
@@ -50,7 +51,6 @@ def add(update, context):
 			add_group(context.args[1])
 		else:
 			assert "You have a typo, impossible addition type"
-
 
 
 def rm(update, context):
@@ -76,7 +76,7 @@ def goto(update, context):
 
 
 def state(update, context):
-	chat_id = update.message.reply_text(CURRENT_STATE.format(free="\n".join(
+	update.message.reply_text(CURRENT_STATE.format(free="\n".join(
 		[station.__repr__() for station in filter(lambda s: stations[s].is_free(), stations)]),
 		busy="\n".join(
 			[stations[station].__repr__() for station in filter(lambda s: not stations[s].is_free(), stations)])))
