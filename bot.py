@@ -43,7 +43,7 @@ def start(update, context):
 
 
 def add(update, context):
-	with respond_error(update):
+	with respond_error(update, context):
 		add_type = context.args[0]
 		if add_type == 's':
 			add_station(context.args[1])
