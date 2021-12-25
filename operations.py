@@ -18,18 +18,22 @@ groups = {}
 
 def add_station(station=None):
 	assert station, "Missing station name"
+	assert not (station in stations), "Station already exists"  
 	stations[station] = Station(station)
 
 def rm_station(station=None):
 	assert station, "Missing station name"
+	assert station in stations, "Station doesn't exists"  
 	stations.pop(station)
 
 def add_group(group=None):
 	assert group, "Missing group id"
+	assert not (group in groups), "Group already exists"  
 	groups[group] = 0
 
 def rm_group(group=None):
 	assert group, "Missing group id"
+	assert group in groups, "Group doesn't exist"
 	groups.pop(group)
 
 def busy_station(station=None, group=None):
