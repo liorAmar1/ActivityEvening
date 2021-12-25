@@ -123,6 +123,11 @@ def time(update, context):
 		update.message.reply_text(str(e))
 
 
+def clr():
+	stations = {}
+	groups = {}
+
+
 def main():    
 	updater = Updater(TOKEN, use_context=True)    
 	dp = updater.dispatcher  
@@ -134,7 +139,8 @@ def main():
 	dp.add_handler(CommandHandler("free", free, pass_args=True))   
 	dp.add_handler(CommandHandler("goto", goto, pass_args=True))
 	dp.add_handler(CommandHandler("st", state))
-	dp.add_handler(CommandHandler("time", time, pass_args=True))      
+	dp.add_handler(CommandHandler("time", time, pass_args=True))
+	dp.add_handler(CommandHandler("clr", clr))      
      
 	updater.start_webhook(listen="0.0.0.0",        
 							port=int(PORT),                       
