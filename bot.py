@@ -30,16 +30,17 @@ To announce a free station:\n\
 @contextmanager
 def respond_error(update, context):
 	chat_id = update.message.chat.id
+	context_i = context
 	context.bot.send_message(chat_id=chat_id, text="error respond is on")
 	try:
 		context.bot.send_message(chat_id=chat_id, text="yeild")
 		yield
-	except AssertionError as e:
-		context.bot.send_message(chat_id=chat_id, text="assert except")
-		context.bot.send_message(chat_id=chat_id, text=e.__repr__())
+	except AssertionError:
+		context_i.bot.send_message(chat_id=chat_id, text="assert except")
+		#context_i.bot.send_message(chat_id=chat_id, text=e.__repr__())
 	except Exception as e:
-		context.bot.send_message(chat_id=chat_id, text="random except")
-		context.bot.send_message(chat_id=chat_id, text=e.__repr__())
+		context_i.bot.send_message(chat_id=chat_id, text="random except")
+		context_i.bot.send_message(chat_id=chat_id, text=e.__repr__())
 
 # Commands Wrappers
 def start(update, context):
