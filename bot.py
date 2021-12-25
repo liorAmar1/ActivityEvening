@@ -11,8 +11,8 @@ TOKEN = os.environ["TOKEN"]
 START_MESSAGE = u"Welcome to Stations Manager bot.\n \
 It will show which station is free and which is busy.\n \
 In order to do so it will need your help in updating him on your station state changes :)\n \
-<b>The syntax is</b>:\n \
-<strong>To print the menu</strong>: \n\
+The syntax is:\n \
+To print the menu: \n\
 /start \n\
 To print the current stations state \n\
 /st \n\
