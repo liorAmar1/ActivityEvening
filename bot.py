@@ -16,6 +16,7 @@ To print the menu: \n\
 /start \n\
 To print the current stations state \n\
 /st \n\
+Adding|Removing groups|stations:\n \
 /add s <station-name>\n \
 /rm s <station-name>\n \
 \n \
