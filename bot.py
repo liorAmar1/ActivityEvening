@@ -32,7 +32,7 @@ To announce where you sent the group:\n \
 To announce a free station:\n\
 /free <station-name>\n \
 To add time to a group total mission's time:\n \
-/time <group-number> <time>\n \
+/time <group-number> <time in minutes>\n \
 To get group total time:\n \
 /total <group-number> \n \
 To get all groups total time:\n \

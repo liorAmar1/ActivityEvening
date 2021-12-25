@@ -1,6 +1,6 @@
 CURRENT_STATE = u"Free Stations:\n{free}\nBusy Stations:\n{busy}\n"
 STATION_STATE = u"  {name}:\n    current group:{group}\n    waiting groups: {waits}"
-GROUP_TIME = u"group: {group} time: {time}"
+GROUP_TIME = u"group: {group} time: {time} minutes"
 
 class Station(object):
 	def __init__(self, name):
