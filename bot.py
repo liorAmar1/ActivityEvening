@@ -30,11 +30,15 @@ To announce a free station:\n\
 @contextmanager
 def respond_error(update, context):
 	chat_id = update.message.chat.id
+	context.bot.send_message(chat_id=chat_id, text="error respond is on")
 	try:
+		context.bot.send_message(chat_id=chat_id, text="yeild")
 		yield
 	except AssertionError as e:
+		context.bot.send_message(chat_id=chat_id, text="assert except")
 		context.bot.send_message(chat_id=chat_id, text=e.__repr__())
 	except Exception as e:
+		context.bot.send_message(chat_id=chat_id, text="random except")
 		context.bot.send_message(chat_id=chat_id, text=e.__repr__())
 
 # Commands Wrappers
@@ -44,12 +48,14 @@ def start(update, context):
 
 def add(update, context):
 	with respond_error(update, context):
+		update.message.reply_text("inside of add")
 		add_type = context.args[0]
 		if add_type == 's':
 			add_station(context.args[1])
 		elif add_type == 'g':
 			add_group(context.args[1])
 		else:
+			update.message.reply_text("asserting")
 			assert "You have a typo, impossible addition type"
 
 
