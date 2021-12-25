@@ -46,17 +46,15 @@ def start(update, context):
 
 def add(update, context):
 	try:
-		update.message.reply_text("inside of add")
 		add_type = context.args[0]
 		if add_type == 's':
 			add_station(context.args[1])
 		elif add_type == 'g':
 			add_group(context.args[1])
 		else:
-			update.message.reply_text("asserting")
 			assert False, "You have a typo, impossible addition type"
 	except AssertionError as e:
-		update.message.reply_text(e.__repr__())
+		update.message.reply_text(str(e))
 	except Exception as e:
 		update.message.reply_text(e.__repr__())
 
