@@ -27,28 +27,18 @@ To announce where you sent the group:\n \
 To announce a free station:\n\
 /free <station-name>"
 
-@contextmanager
-def respond_error(update, context):
-	chat_id = update.message.chat.id
-	context_i = context
-	context.bot.send_message(chat_id=chat_id, text="error respond is on")
-	try:
-		context.bot.send_message(chat_id=chat_id, text="yeild")
-		yield
-	except AssertionError:
-		context_i.bot.send_message(chat_id=chat_id, text="assert except")
-		#context_i.bot.send_message(chat_id=chat_id, text=e.__repr__())
-	except Exception as e:
-		context_i.bot.send_message(chat_id=chat_id, text="random except")
-		context_i.bot.send_message(chat_id=chat_id, text=e.__repr__())
-
 # Commands Wrappers
 def start(update, context):
-	update.message.reply_text(START_MESSAGE)
+	try:
+		update.message.reply_text(START_MESSAGE)
+	except AssertionError as e:
+		update.message.reply_text(e.__repr__())
+	except Exception as e:
+		update.message.reply_text(e.__repr__())
 
 
 def add(update, context):
-	with respond_error(update, context):
+	try:
 		update.message.reply_text("inside of add")
 		add_type = context.args[0]
 		if add_type == 's':
@@ -58,39 +48,74 @@ def add(update, context):
 		else:
 			update.message.reply_text("asserting")
 			assert "You have a typo, impossible addition type"
+	except AssertionError as e:
+		update.message.reply_text(e.__repr__())
+	except Exception as e:
+		update.message.reply_text(e.__repr__())
+
 
 
 def rm(update, context):
-	rm_type = context.args[0]
-	if rm_type == 's':
-		rm_station(context.args[1])
-	elif rm_type == 'g':
-		rm_group(context.args[1])
-	else:
-		assert "You have a typo, impossible addition type"
+	try:
+		rm_type = context.args[0]
+		if rm_type == 's':
+			rm_station(context.args[1])
+		elif rm_type == 'g':
+			rm_group(context.args[1])
+		else:
+			assert "You have a typo, impossible addition type"
+	except AssertionError as e:
+		update.message.reply_text(e.__repr__())
+	except Exception as e:
+		update.message.reply_text(e.__repr__())
 
 
 def busy(update, context):
-	busy_station(context.args[0], context.args[1])
+	try:
+		busy_station(context.args[0], context.args[1])
+	except AssertionError as e:
+		update.message.reply_text(e.__repr__())
+	except Exception as e:
+		update.message.reply_text(e.__repr__())
 
 
 def free(update, context):
-	free_station(context.args[0])
+	try:
+		free_station(context.args[0])
+	except AssertionError as e:
+		update.message.reply_text(e.__repr__())
+	except Exception as e:
+		update.message.reply_text(e.__repr__())
 
 
 def goto(update, context):
-	go_to_station(context.args[0], context.args[1])
+	try:
+		go_to_station(context.args[0], context.args[1])
+	except AssertionError as e:
+		update.message.reply_text(e.__repr__())
+	except Exception as e:
+		update.message.reply_text(e.__repr__())
 
 
 def state(update, context):
-	update.message.reply_text(CURRENT_STATE.format(free="\n".join(
-		[station.__repr__() for station in filter(lambda s: stations[s].is_free(), stations)]),
-		busy="\n".join(
-			[stations[station].__repr__() for station in filter(lambda s: not stations[s].is_free(), stations)])))
+	try:
+		update.message.reply_text(CURRENT_STATE.format(free="\n".join(
+			[station.__repr__() for station in filter(lambda s: stations[s].is_free(), stations)]),
+			busy="\n".join(
+				[stations[station].__repr__() for station in filter(lambda s: not stations[s].is_free(), stations)])))
+	except AssertionError as e:
+		update.message.reply_text(e.__repr__())
+	except Exception as e:
+		update.message.reply_text(e.__repr__())
 
 
 def time(update, context):
-	add_time(context.args[0], context.args[1])
+	try:
+		add_time(context.args[0], context.args[1])
+	except AssertionError as e:
+		update.message.reply_text(e.__repr__())
+	except Exception as e:
+		update.message.reply_text(e.__repr__())
 
 
 def main():    
