@@ -14,7 +14,7 @@ class Station(object):
         return (self.group == None) and (not len(self.waits))
 
 stations = {}
-groups = []
+groups = {}
 
 def add_station(station=None):
 	assert station, "Missing station name"
@@ -26,31 +26,39 @@ def rm_station(station=None):
 
 def add_group(group=None):
 	assert group, "Missing group id"
-	groups.append(group)
+	groups[group] = 0
 
 def rm_group(group=None):
 	assert group, "Missing group id"
-	groups.remove(group)
+	groups.pop(group)
 
 def busy_station(station=None, group=None):
 	assert group, "Missing group id"
 	assert station, "Missing station name"
-	assert station in stations, "Wrong station name"
-	assert groups.count(group) == 1, "Wrong group id"
+	assert station in stations, "Station doesn't exist"
+	assert group in groups, "Group doesn't exist"
+	if group in stations[station].waits:
+		stations[station].waits.remove(group)
 	stations[station].group = group
 
 def free_station(station=None):
 	assert station, "Missing station name"
-	assert station in stations, "Wrong station name"
+	assert station in stations, "Station doesn't exist"
 	stations[station].group = None
 
 def go_to_station(group=None, station=None):
 	assert group, "Missing group id"
 	assert station, "Missing station name"
-	assert station in stations, "Wrong station name"
-	assert groups.count(group) == 1, "Wrong group id"
+	assert station in stations, "Station doesn't exist"
+	assert group in groups, "Group doesn't exist"
 	old_station = [stations[s] for s in stations if stations[s].group == group]
 	if any(old_station):
 		for s in old_station:
 			s.group=None
 	stations[station].waits.append(group)
+
+def add_time(group=None, time=0):
+	assert group, "Missing group id"
+	assert time <= 0 , "Time is zero or less"
+	assert group in groups, "Group doesn't exist"
+	groups[group] += time
