@@ -163,7 +163,7 @@ def main():
 	dp.add_handler(CommandHandler("st", state, pass_args=True))
 	dp.add_handler(CommandHandler("time", time, pass_args=True))
 	dp.add_handler(CommandHandler("clr", clr, pass_args=True))  
-	dp.add handler(CommandHandler("total", total, pass_args=True))    
+	dp.add_handler(CommandHandler("total", total, pass_args=True))    
      
 	updater.start_webhook(listen="0.0.0.0",        
 							port=int(PORT),                       
