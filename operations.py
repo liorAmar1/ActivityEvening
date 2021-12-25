@@ -58,8 +58,8 @@ def go_to_station(group=None, station=None):
 	stations[station].waits.append(group)
 
 def add_time(group=None, time=0):
-	time_f = float(time)
+	time = float(time)
 	assert group, "Missing group id"
-	assert 0 < time_f, "Time is zero or less"
+	assert 0 < time, "Time is zero or less"
 	assert group in groups, "Group doesn't exist"
 	groups[group] += time
