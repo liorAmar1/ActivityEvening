@@ -143,11 +143,12 @@ def clr(update, context):
 
 def total(update, context):
 	chat_id = update.message.chat_id
-	output = "There aint no groups"
 	if len(context.args):
 		output = get_total_times(context.args[0])
 	else:
 		output = get_total_times()
+	if not len(output):
+		output = "There aint no groups"
 	context.bot.send_message(chat_id=chat_id, text=output)
 
 def main():    
