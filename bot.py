@@ -36,15 +36,17 @@ To add time to a group total mission's time:\n \
 
 # Commands Wrappers
 def start(update, context):
+	chat_id = update.message.chat_id
 	try:
 		update.message.reply_text(START_MESSAGE)
 	except AssertionError as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 	except Exception as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
 def add(update, context):
+	chat_id = update.message.chat_id
 	try:
 		add_type = context.args[0]
 		if add_type == 's':
@@ -54,13 +56,14 @@ def add(update, context):
 		else:
 			assert False, "You have a typo, impossible addition type"
 	except AssertionError as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 	except Exception as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
 
 def rm(update, context):
+	chat_id = update.message.chat_id
 	try:
 		rm_type = context.args[0]
 		if rm_type == 's':
@@ -70,57 +73,62 @@ def rm(update, context):
 		else:
 			assert "You have a typo, impossible addition type"
 	except AssertionError as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 	except Exception as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
 def busy(update, context):
+	chat_id = update.message.chat_id
 	try:
 		busy_station(context.args[0], context.args[1])
 	except AssertionError as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 	except Exception as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
 def free(update, context):
+	chat_id = update.message.chat_id
 	try:
 		free_station(context.args[0])
 	except AssertionError as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 	except Exception as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
 def goto(update, context):
+	chat_id = update.message.chat_id
 	try:
 		go_to_station(context.args[0], context.args[1])
 	except AssertionError as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 	except Exception as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
 def state(update, context):
+	chat_id = update.message.chat_id
 	try:
 		update.message.reply_text(CURRENT_STATE.format(free="  "+ "\n  ".join(
 			[str(station) for station in filter(lambda s: stations[s].is_free(), stations)]),
 			busy="\n".join(
 				[str(stations[station]) for station in filter(lambda s: not stations[s].is_free(), stations)])))
 	except AssertionError as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 	except Exception as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
 def time(update, context):
+	chat_id = update.message.chat_id
 	try:
 		add_time(context.args[0], context.args[1])
 	except AssertionError as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 	except Exception as e:
-		update.message.reply_text(str(e))
+		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
 def clr():
@@ -132,15 +140,15 @@ def main():
 	updater = Updater(TOKEN, use_context=True)    
 	dp = updater.dispatcher  
   
-	dp.add_handler(CommandHandler("start", start))
+	dp.add_handler(CommandHandler("start", start, pass_args=True))
 	dp.add_handler(CommandHandler("add", add, pass_args=True))
 	dp.add_handler(CommandHandler("rm", rm, pass_args=True))   
 	dp.add_handler(CommandHandler("busy", busy, pass_args=True))   
 	dp.add_handler(CommandHandler("free", free, pass_args=True))   
 	dp.add_handler(CommandHandler("goto", goto, pass_args=True))
-	dp.add_handler(CommandHandler("st", state))
+	dp.add_handler(CommandHandler("st", state, pass_args=True))
 	dp.add_handler(CommandHandler("time", time, pass_args=True))
-	dp.add_handler(CommandHandler("clr", clr))      
+	dp.add_handler(CommandHandler("clr", clr, pass_args=True))      
      
 	updater.start_webhook(listen="0.0.0.0",        
 							port=int(PORT),                       
