@@ -32,9 +32,8 @@ def respond_error(update):
 	try:
 		yield
 	except AssertionError as e:
-		print(e.__repr__())
-		update.message.reply_text(e.__repr__())
 		assert 0==1, "error"
+		update.message.reply_text(e.__repr__())
 	finally:
 		pass
 
