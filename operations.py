@@ -2,16 +2,16 @@ CURRENT_STATE = u"Free:\n{free}\nBusy:\n{busy}\n"
 STATION_STATE = u"{name}: group:{group} waits:{waits}"
 
 class Station(object):
-    def __init__(self, name):
-        self.name = name
-        self.waits = []
-        self.group = None
+	def __init__(self, name):
+		self.name = name
+		self.waits = []
+		self.group = None
 
-    def __repr__(self):
-        return STATION_STATE.format(name=self.name, group=self.group, waits=', '.join(self.waits))
+	def __repr__(self):
+		return STATION_STATE.format(name=self.name, group=self.group, waits=', '.join(self.waits))
 
-    def is_free(self):
-        return (self.group == None) and (not len(self.waits))
+	def is_free(self):
+		return (self.group == None) and (not len(self.waits))
 
 stations = {}
 groups = {}
