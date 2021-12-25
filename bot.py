@@ -32,7 +32,11 @@ To announce where you sent the group:\n \
 To announce a free station:\n\
 /free <station-name>\n \
 To add time to a group total mission's time:\n \
-/time <group-number> <time>\n"
+/time <group-number> <time>\n \
+To get group total time:\n \
+/total <group-number> \n \
+To get all groups total time:\n \
+/total"
 
 
 # Commands Wrappers
@@ -132,10 +136,19 @@ def time(update, context):
 		context.bot.send_message(chat_id=chat_id, text=str(e))
 
 
-def clr():
+def clr(update, context):
 	stations = {}
 	groups = {}
 
+
+def total(update, context):
+	chat_id = update.message.chat_id
+	output = ""
+	if len(context.args):
+		output = get_total_times(context.args[0])
+	else:
+		output = get_total_times()
+	context.bot.send_message(chat_id=chat_id, text=output)
 
 def main():    
 	updater = Updater(TOKEN, use_context=True)    
@@ -149,7 +162,8 @@ def main():
 	dp.add_handler(CommandHandler("goto", goto, pass_args=True))
 	dp.add_handler(CommandHandler("st", state, pass_args=True))
 	dp.add_handler(CommandHandler("time", time, pass_args=True))
-	dp.add_handler(CommandHandler("clr", clr, pass_args=True))      
+	dp.add_handler(CommandHandler("clr", clr, pass_args=True))  
+	dp.add handler(CommandHandler("total", total, pass_args=True))    
      
 	updater.start_webhook(listen="0.0.0.0",        
 							port=int(PORT),                       

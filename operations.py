@@ -1,5 +1,6 @@
 CURRENT_STATE = u"Free Stations:\n{free}\nBusy Stations:\n{busy}\n"
 STATION_STATE = u"  {name}:\n    current group:{group}\n    waiting groups: {waits}"
+GROUP_TIME = u"group: {group} time: {time}"
 
 class Station(object):
 	def __init__(self, name):
@@ -67,3 +68,9 @@ def add_time(group=None, time=0):
 	assert 0 < time, "Time is zero or less"
 	assert group in groups, "Group doesn't exist"
 	groups[group] += time
+
+def get_total_times(group=None):
+	if group:
+		assert group in groups, "Group doesn't exist"
+		return GROUP_TIME.format(group=group, time=groups[group])
+	return "\n".join([GROUP_TIME.format(group=g, time=groups[g]) for g in groups])
